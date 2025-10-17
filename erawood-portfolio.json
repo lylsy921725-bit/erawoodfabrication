@@ -1,0 +1,292 @@
+{
+  "hero": {
+    "pill": "模块化木结构｜可持续建筑",
+    "title": "以自然为灵感，打造轻盈而温暖的模块化栖居空间",
+    "intro": "EraWood 专注模块化木结构建筑 15 年，以工业化精准制造与现场快速拼装，为城市品牌与自然度假项目打造高品质空间。",
+    "since": "2009-2024",
+    "signature": "EraWood 设计与制造"
+  },
+  "sections": {
+    "works": {
+      "title": "模块化建筑作品精选",
+      "description": "从山野木屋、城市展厅到旅居营地，我们将模块化技术与木结构美学结合，创造出灵活、环保且富有情感的空间体验。点击任一作品，即可逐张浏览高清效果图。"
+    },
+    "contact": {
+      "title": "联系我们",
+      "description": "欢迎体验 EraWood 的模块化建筑解决方案。我们提供从概念设计、结构生产到现场安装的全流程服务，助力品牌打造具有温度的空间。"
+    },
+    "admin": {
+      "title": "登录",
+      "description": "请登录以维护作品分类、项目内容和图集。所有数据保存于浏览器本地存储，可离线使用。"
+    },
+    "footer": {
+      "tagline": "以模块化建构自然栖居"
+    }
+  },
+  "branding": {
+    "companyName": "EraWood Studio",
+    "logoText": "EW",
+    "logoImage": "",
+    "companyIntro": "以模块化建构自然栖居，连接城市与山野的可持续空间。",
+    "logoTransform": {
+      "scale": 1,
+      "offsetX": 0,
+      "offsetY": 0
+    }
+  },
+  "categories": [
+    {
+      "id": "cat-forest",
+      "name": "森林系列",
+      "description": "与山林共生的木屋产品线，强调轻盈结构与自然景观的融合。",
+      "works": [
+        {
+          "id": "work-skyline",
+          "name": "天际木屋",
+          "description": "两组模块搭建的双层木屋，通过大面积落地玻璃框住山谷云海，呈现沉浸式自然居住体验。",
+          "location": "浙江 · 莫干山",
+          "area": "118㎡",
+          "year": "2023",
+          "interiorArea": "96㎡",
+          "footprint": "118㎡",
+          "productSize": "12m × 9m × 6m",
+          "roomType": "2 卧 1 客厅",
+          "coverId": "work-skyline-img-c7a62005-0ec9-4146-920e-bb4bf349dc75",
+          "images": [
+            {
+              "id": "work-skyline-img-c7a62005-0ec9-4146-920e-bb4bf349dc75",
+              "alt": "CAPWELL 望山-室外人视角",
+              "src": "CAPWELL 望山-室外人视角.jpg",
+              "transform": {
+                "scale": 1,
+                "offsetX": 0,
+                "offsetY": 0
+              }
+            },
+            {
+              "id": "work-skyline-img-ad2da9d7-7496-439e-9c85-9448780b0dff",
+              "alt": "CAPWELL 云栖-室外人视角",
+              "src": "CAPWELL 云栖-室外人视角.jpg",
+              "transform": {
+                "scale": 1,
+                "offsetX": 0,
+                "offsetY": 0
+              }
+            },
+            {
+              "id": "work-skyline-img-4d3174d7-a619-457e-bc1b-61dab363648b",
+              "alt": "CAPWELL知野-室外人视角",
+              "src": "CAPWELL知野-室外人视角.jpg",
+              "transform": {
+                "scale": 1,
+                "offsetX": 0,
+                "offsetY": 0
+              }
+            }
+          ]
+        },
+        {
+          "id": "work-moss",
+          "name": "苔原旅居站",
+          "description": "以可回收钢木混合框架构成的模块化旅居站，可在 48 小时内部署完成，适配不同地形与气候。",
+          "location": "四川 · 九寨沟",
+          "area": "86㎡",
+          "year": "2022",
+          "interiorArea": "68㎡",
+          "footprint": "86㎡",
+          "productSize": "10m × 8m × 5m",
+          "roomType": "1 卧 1 起居",
+          "coverId": "work-moss-img-1",
+          "images": [
+            {
+              "id": "work-moss-img-1",
+              "alt": "苔原旅居站 - 集群夜景",
+              "src": "work-moss-img-1.svg",
+              "transform": {
+                "scale": 1,
+                "offsetX": 0,
+                "offsetY": 0
+              }
+            },
+            {
+              "id": "work-moss-img-2",
+              "alt": "苔原旅居站 - 入口廊道",
+              "src": "work-moss-img-2.svg",
+              "transform": {
+                "scale": 1,
+                "offsetX": 0,
+                "offsetY": 0
+              }
+            },
+            {
+              "id": "work-moss-img-3",
+              "alt": "苔原旅居站 - 客房内部",
+              "src": "work-moss-img-3.svg",
+              "transform": {
+                "scale": 1,
+                "offsetX": 0,
+                "offsetY": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cat-urban",
+      "name": "城市展厅",
+      "description": "针对城市商业场景打造的模块化展厅体系，兼顾快速安装与品牌调性。",
+      "works": [
+        {
+          "id": "work-ripple",
+          "name": "涟漪体验馆",
+          "description": "可拆卸的环形展厅模块，形成连续的展示动线，适合品牌快闪与巡回展览。",
+          "location": "上海 · 西岸",
+          "area": "260㎡",
+          "year": "2024",
+          "interiorArea": "210㎡",
+          "footprint": "260㎡",
+          "productSize": "18m × 14m × 6m",
+          "roomType": "开放展示模块",
+          "coverId": "work-ripple-img-1",
+          "images": [
+            {
+              "id": "work-ripple-img-1",
+              "alt": "涟漪体验馆 - 外立面",
+              "src": "work-ripple-img-1.svg",
+              "transform": {
+                "scale": 1,
+                "offsetX": 0,
+                "offsetY": 0
+              }
+            },
+            {
+              "id": "work-ripple-img-2",
+              "alt": "涟漪体验馆 - 品牌展示区",
+              "src": "work-ripple-img-2.svg",
+              "transform": {
+                "scale": 1,
+                "offsetX": 0,
+                "offsetY": 0
+              }
+            },
+            {
+              "id": "work-ripple-img-3",
+              "alt": "涟漪体验馆 - 洽谈区",
+              "src": "work-ripple-img-3.svg",
+              "transform": {
+                "scale": 1,
+                "offsetX": 0,
+                "offsetY": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cat-resort",
+      "name": "旅居营地",
+      "description": "以营地运营为核心的模块化轻型建筑，注重舒适度与运维效率。",
+      "works": [
+        {
+          "id": "work-dune",
+          "name": "沙丘会客厅",
+          "description": "采用模块化木梁与织物围护打造的半户外会客空间，为沿海营地提供全天候社交场景。",
+          "location": "海南 · 万宁",
+          "area": "150㎡",
+          "year": "2021",
+          "interiorArea": "110㎡",
+          "footprint": "150㎡",
+          "productSize": "22m × 7m × 5m",
+          "roomType": "多功能社交空间",
+          "coverId": "work-dune-img-1",
+          "images": [
+            {
+              "id": "work-dune-img-1",
+              "alt": "沙丘会客厅 - 黄昏氛围",
+              "src": "work-dune-img-1.svg",
+              "transform": {
+                "scale": 1,
+                "offsetX": 0,
+                "offsetY": 0
+              }
+            },
+            {
+              "id": "work-dune-img-2",
+              "alt": "沙丘会客厅 - 室内酒吧",
+              "src": "work-dune-img-2.svg",
+              "transform": {
+                "scale": 1,
+                "offsetX": 0,
+                "offsetY": 0
+              }
+            },
+            {
+              "id": "work-dune-img-3",
+              "alt": "沙丘会客厅 - 顶棚结构",
+              "src": "work-dune-img-3.svg",
+              "transform": {
+                "scale": 1,
+                "offsetX": 0,
+                "offsetY": 0
+              }
+            }
+          ]
+        },
+        {
+          "id": "work-horizon",
+          "name": "地平线营地客房",
+          "description": "标准化单元结合可替换立面系统，实现快速部署与多景观适配的营地住宿单元。",
+          "location": "内蒙古 · 乌兰布统",
+          "area": "42㎡",
+          "year": "2020",
+          "interiorArea": "36㎡",
+          "footprint": "42㎡",
+          "productSize": "8m × 5m × 4m",
+          "roomType": "双人客房单元",
+          "coverId": "work-horizon-img-1",
+          "images": [
+            {
+              "id": "work-horizon-img-1",
+              "alt": "地平线营地客房 - 整体外观",
+              "src": "work-horizon-img-1.svg",
+              "transform": {
+                "scale": 1,
+                "offsetX": 0,
+                "offsetY": 0
+              }
+            },
+            {
+              "id": "work-horizon-img-2",
+              "alt": "地平线营地客房 - 床头阅读区",
+              "src": "work-horizon-img-2.svg",
+              "transform": {
+                "scale": 1,
+                "offsetX": 0,
+                "offsetY": 0
+              }
+            },
+            {
+              "id": "work-horizon-img-3",
+              "alt": "地平线营地客房 - 卫浴空间",
+              "src": "work-horizon-img-3.svg",
+              "transform": {
+                "scale": 1,
+                "offsetX": 0,
+                "offsetY": 0
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "contact": {
+    "phone": "+86 21 8888 6688",
+    "email": "hello@erawood.com",
+    "address": "上海市杨浦区创智天地设计中心 A 座 5F",
+    "wechat": "EraWood_Studio",
+    "note": "如需定制方案或获取 BIM/施工资料，请通过电话或邮件与我们联系，我们将在 1 个工作日内回复。"
+  }
+}
