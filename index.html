@@ -1520,6 +1520,112 @@
       return trimmed;
     }
 
+  // 可选：使用 jsDelivr 从 GitHub 仓库作为镜像托管静态资源。
+    // 配置方式：在控制台或在页面初始化前设置
+    //   window.USE_JSDELIVR = true;
+    //   window.JSDELIVR_REPO = '用户名/仓库名@分支或tag'; // 示例 'lylsy921725-bit/erawoodfabrication@latest'
+    // 如果启用，页面会把裸文件名替换为 jsDelivrcdn 地址：
+    // https://cdn.jsdelivr.net/gh/<repo>/<path>
+  // 默认启用 jsDelivr 镜像，指向你的仓库（可在控制台覆盖）
+  window.USE_JSDELIVR = window.USE_JSDELIVR === true || true;
+  window.JSDELIVR_REPO = window.JSDELIVR_REPO || 'lylsy921725-bit/erawoodfabrication@main';
+
+  function jsDelivrUrlFor(src) {
+      try {
+        if (!window.USE_JSDELIVR) return src;
+        if (!src || typeof src !== 'string') return src;
+        // 如果已经是绝对 URL 或 data URI，保持不变
+        if (/^https?:\/\//i.test(src) || /^data:/i.test(src)) return src;
+        // JSDelivr expects repo in form user/repo@version
+        const repo = (window.JSDELIVR_REPO && window.JSDELIVR_REPO.toString().trim()) || '';
+        if (!repo) return src;
+        // 移除任何前导 ./ 或 /
+        const path = src.replace(/^\.?\//, '');
+        // encode each path segment
+        const parts = path.split('/').map(encodeURIComponent).join('/');
+        return `https://cdn.jsdelivr.net/gh/${repo}/${parts}`;
+      } catch (e) {
+        return src;
+      }
+    }
+
+    // 懒加载器：使用 IntersectionObserver 在图片接近视口时再设置 src
+    // 优点：减少移动端首屏和并发下载压力，提升首屏可见内容加载速度
+    // 逻辑：图片元素需设置 data-src 为要加载的缩略图或原图（已通过 jsDelivrUrlFor 包装），
+    // 并设置 data-full-src 存放原始大图地址（用于 thumb 失败回退或 lightbox）。
+    // 如果不支持 IntersectionObserver，会回退到直接加载 data-src。
+    const LazyLoader = (function () {
+      let observer = null;
+
+      function onIntersection(entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            loadImage(img);
+            if (observer && img) observer.unobserve(img);
+          }
+        });
+      }
+
+      function loadImage(img) {
+        if (!img || !img.dataset) return;
+        // already loaded
+        if (img.dataset._loaded) return;
+        const toLoad = img.dataset.src || img.dataset.thumbSrc || img.dataset.fullSrc || img.dataset.fullsrc;
+        if (!toLoad) return;
+        img.dataset._loaded = '1';
+        // 绑定错误回退：如果是 thumb，则回退到 fullSrc
+        function onImgError() {
+          try {
+            img.removeEventListener('error', onImgError);
+          } catch (e) {}
+          // 如果当前 src 含有 "-thumb" 标识，则回退到 fullSrc
+          try {
+            const cur = img.getAttribute('src') || '';
+            if (cur.indexOf('-thumb') !== -1 && img.dataset.fullSrc) {
+              img.src = img.dataset.fullSrc;
+              return;
+            }
+            // 如果当前请求来自 jsDelivr（cdn.jsdelivr.net）且失败，则尝试使用原始相对路径（保留中文名）回退
+            if (cur.indexOf('cdn.jsdelivr.net') !== -1 && img.dataset.originalPath) {
+              try {
+                img.src = img.dataset.originalPath;
+                return;
+              } catch (e) {}
+            }
+          } catch (e) {}
+        }
+
+        img.addEventListener('error', onImgError);
+        // 开始加载
+        try {
+          img.src = toLoad;
+        } catch (e) {
+          // ignore
+        }
+      }
+
+      function observeAll(root = null) {
+        const images = Array.from(document.querySelectorAll('img[data-src], img[data-thumb-src], img[data-full-src]'));
+        if (!images.length) return;
+        if ('IntersectionObserver' in window) {
+          if (!observer) {
+            observer = new IntersectionObserver(onIntersection, { root: null, rootMargin: '200px', threshold: 0.05 });
+          }
+          images.forEach((img) => {
+            // if already has a real src (loaded), skip
+            if (img.dataset._loaded) return;
+            observer.observe(img);
+          });
+        } else {
+          // 回退：直接加载所有 data-src
+          images.forEach((img) => loadImage(img));
+        }
+      }
+
+      return { observeAll, loadImage };
+    })();
+
     // 将用户上传的原始文件名规范为安全的文件名（用于导出时生成稳定的文件名）
     function sanitizeFilename(name) {
       if (!name || typeof name !== 'string') return '';
@@ -1738,7 +1844,7 @@
         mark.innerHTML = '';
         if (branding.logoImage) {
           const img = document.createElement('img');
-          img.src = branding.logoImage;
+          img.src = jsDelivrUrlFor(branding.logoImage);
           img.alt = `${branding.companyName || '品牌'} Logo`;
           applyImageTransform(img, logoTransform);
           mark.appendChild(img);
@@ -2016,7 +2122,16 @@
         const cardImage = document.createElement('div');
         cardImage.className = 'card-image';
         const image = document.createElement('img');
-        image.src = cover?.src || '';
+        const originalSrc = normalizeImageSrc(cover?.src || '') || '';
+        // 尝试 thumb 优先策略，但不要立即赋予 src，改为 data-src 由 LazyLoader 在靠近视口时触发加载
+        const thumbSrc = (originalSrc && originalSrc.replace(/(\.[^.]+)$/, '-thumb$1')) || originalSrc;
+  const thumbUrl = jsDelivrUrlFor(thumbSrc);
+  const fullUrl = jsDelivrUrlFor(originalSrc);
+  image.dataset.src = thumbUrl; // 优先加载缩略图（可能是 CDN 地址）
+  image.dataset.fullSrc = fullUrl; // 回退或 lightbox 使用原图（CDN 地址）
+  // 保留原始相对路径（含中文名），以便在 CDN 失败或 404 时尝试直接使用相对路径访问
+  image.dataset.originalPath = originalSrc;
+        image.src = createPlaceholder('', '#000'); // 使用纯黑占位图减少空白感
         image.alt = cover?.alt || work.name || '';
         image.loading = 'lazy';
         image.style.transform = transformStyle || '';
@@ -2084,6 +2199,9 @@
 
         grid.appendChild(card);
       });
+
+      // 所有新创建的图片元素交给 LazyLoader 管理
+      LazyLoader.observeAll();
     }
 
     function openGalleryModal(categoryId, workId, index) {
@@ -2109,8 +2227,19 @@
       }
       const lightboxImage = document.getElementById('lightbox-image');
       if (lightboxImage) {
-        lightboxImage.src = image?.src || '';
+        const cdnUrl = jsDelivrUrlFor(image?.src || '');
         lightboxImage.alt = image?.alt || work.name;
+        lightboxImage.src = cdnUrl;
+        // 若 CDN 地址失败（例如中文文件名未命中），回退到相对路径（保留中文名）
+        lightboxImage.onerror = function () {
+          try {
+            lightboxImage.onerror = null;
+          } catch (e) {}
+          try {
+            // 尝试使用原始 src（未经 jsDelivr 包装），works 中保存的 src 保持原样
+            lightboxImage.src = image?.src || '';
+          } catch (e) {}
+        };
         applyImageTransform(lightboxImage, image?.transform);
       }
       document.getElementById('lightbox-title').textContent = work.name;
